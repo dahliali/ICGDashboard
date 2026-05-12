@@ -1,0 +1,26 @@
+KPIID,ServiceID,KPIName,TargetValue,TargetUnit,TargetStatus,DefinitionStatus,SourceSystem,ReportingStream,GoodDirection
+KPI001,SVC002,Rent arrears,,,,Target not confirmed,Definition requires mapping confirmation,ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI002,SVC002,Tenancy exits,,,,Target not confirmed,"KPM2/KPM4 definitions not confirmed",ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI003,SVC002,Vacancy turnaround,,,,Target not confirmed,Definition requires mapping confirmation,ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI004,SVC002,Occupancy,,,,Target not confirmed,Definition requires mapping confirmation,ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI005,SVC002,Complaints,,,,Target not confirmed,Definition requires mapping confirmation,ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI006,SVC002,Repair timeframes,,,,Target not confirmed,"Urgent / non-urgent split not separately maintained",ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI007,SVC002,Tenant satisfaction,,,,Target not confirmed,"Survey questions are approximate mappings to KPM 7.4-7.7",ARL CHRA/MHUD annual Excel template,Annual CHRA/MHUD,TBD
+KPI008,SVC006,Immediate needs met,85,Percent,Target known,Numerator / denominator not yet confirmed,Recordbase; Excel KPI tracking,MHUD monthly and Auckland Council annual,Higher is better
+KPI009,SVC006,Continued engagement,85,Percent,Target known,Numerator / denominator not yet confirmed,Recordbase; Excel KPI tracking,MHUD monthly and Auckland Council annual,Higher is better
+KPI010,SVC006,Connected to community services,50,Percent,Target known,Numerator / denominator not yet confirmed,Recordbase; Excel KPI tracking,MHUD monthly and Auckland Council annual,Higher is better
+KPI011,SVC008,Occupancy / utilisation,90,Percent,Target mostly stated,Definition requires centre-level confirmation,Infocare; centre enrolment records,Monthly,Higher is better
+KPI012,SVC008,Funded child hours,,,,Meet/exceed budgeted funded hours,Requires budget and category mapping confirmation,Infocare export; KPI tracker workbook,Monthly,Higher is better
+KPI013,SVC008,Staff qualification mix,80,Percent,Target mostly stated,Definition requires source mapping confirmation,HR system; staffing rosters; teacher registration records,Monthly,Higher is better
+KPI014,SVC008,Mandatory training compliance,95,Percent,Target stated,Definition requires source mapping confirmation,LMS / HR Bamboo,Quarterly,Higher is better
+KPI015,SVC008,Incident reporting timeliness,100,Percent,Target stated,Definition requires source mapping confirmation,Incident system / incident register,Monthly,Higher is better
+KPI016,SVC008,Complaints acknowledged within policy timeframe,100,Percent,Target stated,Definition requires source mapping confirmation,Complaints register,Monthly,Higher is better
+KPI017,SVC008,Internal audit completion,100,Percent,Target stated,Definition requires source mapping confirmation,Audit register / self-audit tools,Monthly monitoring + annual programme,Higher is better
+KPI018,SVC008,Corrective actions closed on time,90,Percent,Target stated,Definition requires source mapping confirmation,SIR / CARA / QI action register,Monthly,Higher is better
+KPI019,SVC008,Regulatory self-audit / licensing criteria checks,100,Percent,Target stated,Definition requires source mapping confirmation,ERO self-assurance / checklist evidence folders,Monthly routine checks + annual review,Higher is better
+KPI020,SVC008,Priority whānau engagement,80-100,Percent,Target stated as range,Qualitative definition requires confirmation,Enrolment records,Monthly,Higher is better
+KPI021,SVC003,Clients placed into permanent housing,,,,Not confirmed,Not confirmed,Internal case management systems + programme spreadsheets,TBD,TBD
+KPI022,SVC004,Number of young people housed,,,,Not confirmed,Not confirmed,Internal case management systems + programme spreadsheets,TBD,TBD
+KPI023,SVC005,Tenancies maintained over 12 months,,,,Not confirmed,Not confirmed,Internal case management systems + programme spreadsheets,TBD,TBD
+KPI024,SVC007,Families receiving intervention,,,,Target not confirmed,Current KPI vs future desired field split requires confirmation,Recordbase and manual capture,TBD,TBD
+KPI025,SVC007,Participants / courses delivered,,,,Target not confirmed,Current KPI vs future desired field split requires confirmation,Recordbase and manual capture,TBD,TBD

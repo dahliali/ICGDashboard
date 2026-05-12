@@ -1,0 +1,13 @@
+FactID,Month,ServiceID,KPIID,ActualValue,TargetValue,RAGStatus,DataStatus,Submitter,Reviewer,Comment
+F001,2026-05,SVC002,KPI001,,,Grey,Monthly feed not proven,TBD,TBD,Formal annual evidence exists but dashboard-ready monthly input is not confirmed.
+F002,2026-05,SVC002,KPI002,,,Grey,Definition not confirmed,TBD,TBD,KPM2 and KPM4 tenancy-exit definitions require confirmation before reuse.
+F003,2026-05,SVC006,KPI008,,85,Grey,Definition not confirmed,Paula Bold Wilson,TBD,Target known but numerator / denominator and Recordbase field mapping are not confirmed.
+F004,2026-05,SVC006,KPI009,,85,Grey,Definition not confirmed,Paula Bold Wilson,TBD,Target known but numerator / denominator and Recordbase field mapping are not confirmed.
+F005,2026-05,SVC006,KPI010,,50,Grey,Definition not confirmed,Paula Bold Wilson,TBD,Target known but numerator / denominator and Recordbase field mapping are not confirmed.
+F006,2026-05,SVC008,KPI011,,90,Grey,Monthly value not provided,ECE Service Manager,TBD,Target exists in quality plan response but monthly actual is not in current-state file.
+F007,2026-05,SVC008,KPI014,,95,Grey,Monthly value not provided,ECE Service Manager,TBD,Target exists in quality plan response but monthly actual is not in current-state file.
+F008,2026-05,SVC008,KPI015,,100,Grey,Monthly value not provided,ECE Service Manager,TBD,Target exists in quality plan response but monthly actual is not in current-state file.
+F009,2026-05,SVC003,KPI021,,,Grey,Target not confirmed,TBD,TBD,Discovery required before dashboarding.
+F010,2026-05,SVC004,KPI022,,,Grey,Target not confirmed,TBD,TBD,Discovery required before dashboarding.
+F011,2026-05,SVC005,KPI023,,,Grey,Target not confirmed,TBD,TBD,Discovery required before dashboarding.
+F012,2026-05,SVC007,KPI024,,,Grey,Data capture gaps,TBD,TBD,Client response confirms substantial data capture gaps.

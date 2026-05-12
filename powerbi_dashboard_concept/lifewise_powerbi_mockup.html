@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lifewise KPI Dashboard Concept</title>
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #667085;
+      --line: #d9dee8;
+      --bg: #f4f6f9;
+      --panel: #ffffff;
+      --blue: #1f77b4;
+      --blue-dark: #0f3f64;
+      --green: #2e7d32;
+      --amber: #b7791f;
+      --red: #b42318;
+      --grey: #8a94a6;
+      --purple: #6941c6;
+      --shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      color: white;
+      background: #113f67;
+      border-bottom: 4px solid #f2c94c;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 650;
+    }
+
+    header .context {
+      font-size: 12px;
+      opacity: 0.9;
+      text-align: right;
+      line-height: 1.35;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 252px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    aside {
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    main {
+      padding: 18px;
+    }
+
+    .slicer-label {
+      display: block;
+      margin: 14px 0 6px;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #cfd6e4;
+      border-radius: 4px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .nav button {
+      padding: 10px 12px;
+      border: 1px solid #cad3e1;
+      border-radius: 4px;
+      background: white;
+      color: #243b53;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .nav button.active {
+      color: white;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .note {
+      padding: 10px;
+      border-left: 4px solid var(--grey);
+      background: #eef1f5;
+      color: #475467;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .page-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .page-title h2 {
+      margin: 0;
+      color: #102a43;
+      font-size: 22px;
+    }
+
+    .page-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid.cards {
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .grid.three {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .panel, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 14px;
+    }
+
+    .panel h3 {
+      margin: 0 0 10px;
+      color: #243b53;
+      font-size: 15px;
+    }
+
+    .card {
+      padding: 13px;
+      min-height: 86px;
+    }
+
+    .card .label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .card .value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .card .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 8px 9px;
+      border-bottom: 1px solid #edf0f5;
+      text-align: left;
+      vertical-align: top;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      color: #344054;
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    td {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .medium { background: var(--blue); }
+    .medium-low { background: var(--amber); }
+    .low { background: var(--red); }
+    .na { background: var(--grey); }
+    .unknown { background: var(--purple); }
+    .rag-grey { background: var(--grey); }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .service-card {
+      padding: 10px;
+      border: 1px solid #d8deea;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      min-height: 106px;
+    }
+
+    .service-card.selected {
+      outline: 2px solid var(--blue);
+      border-color: var(--blue);
+    }
+
+    .service-card h4 {
+      margin: 0 0 8px;
+      color: #102a43;
+      font-size: 13px;
+    }
+
+    .service-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .split-list {
+      display: grid;
+      gap: 8px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .split-list li {
+      padding: 9px;
+      border: 1px solid #e4e8f0;
+      border-radius: 4px;
+      background: #fcfcfd;
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 155px 1fr 36px;
+      gap: 8px;
+      align-items: center;
+      margin: 9px 0;
+      font-size: 12px;
+    }
+
+    .bar-track {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf5;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .input-grid td input {
+      min-width: 84px;
+      padding: 6px;
+      font-size: 12px;
+    }
+
+    .footer-caveat {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 1fr; }
+      aside { border-right: 0; border-bottom: 1px solid var(--line); }
+      .grid.cards, .grid.two, .grid.three, .service-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Lifewise KPI Dashboard Concept</h1>
+      <div>Power BI-style operational reporting mockup</div>
+    </div>
+    <div class="context">
+      Source: service_level_master_current_state_v0.4_ece_quality_plan.xlsx<br>
+      Monthly input concept; grey means target, definition, source field, or data is not confirmed.
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside>
+      <div class="nav">
+        <button class="active" data-page="overview">Portfolio Overview</button>
+        <button data-page="detail">Service Detail</button>
+        <button data-page="readiness">Data Readiness & Follow-up</button>
+        <button data-page="input">Monthly Input Concept</button>
+      </div>
+
+      <label class="slicer-label" for="serviceFilter">Service filter</label>
+      <select id="serviceFilter"></select>
+
+      <label class="slicer-label" for="readinessFilter">Readiness filter</label>
+      <select id="readinessFilter">
+        <option value="All">All readiness levels</option>
+        <option>Medium</option>
+        <option>Medium-Low</option>
+        <option>Low</option>
+        <option>N/A</option>
+        <option>Unknown / Scope confirmation required</option>
+      </select>
+
+      <div class="slicer-label">Status rule</div>
+      <div class="note">
+        RAG is only calculated where KPI definition, target, source mapping, and monthly actual value are confirmed. Otherwise the status is grey.
+      </div>
+    </aside>
+
+    <main>
+      <section id="overview" class="page active">
+        <div class="page-title">
+          <div>
+            <h2>Portfolio Overview</h2>
+            <p>Service coverage, readiness, prototype candidates, and discovery areas.</p>
+          </div>
+        </div>
+
+        <div class="grid cards">
+          <div class="card"><div class="label">Total rows</div><div class="value">10</div><div class="sub">Includes scope confirmation</div></div>
+          <div class="card"><div class="label">Medium</div><div class="value">2</div><div class="sub">ARL, ECE</div></div>
+          <div class="card"><div class="label">Medium-Low</div><div class="value">1</div><div class="sub">Merge Café</div></div>
+          <div class="card"><div class="label">Low</div><div class="value">4</div><div class="sub">Discovery needed</div></div>
+          <div class="card"><div class="label">Unknown scope</div><div class="value">2</div><div class="sub">Brief-only items</div></div>
+          <div class="card"><div class="label">High-priority follow-ups</div><div class="value">14</div><div class="sub">Open concept actions</div></div>
+        </div>
+
+        <div class="grid two" style="margin-top:14px;">
+          <div class="panel">
+            <h3>Service Cards</h3>
+            <div id="serviceCards" class="service-cards"></div>
+          </div>
+          <div class="panel">
+            <h3>Readiness Distribution</h3>
+            <div id="readinessBars"></div>
+            <div class="legend">
+              <span class="pill medium">Medium</span>
+              <span class="pill medium-low">Medium-Low</span>
+              <span class="pill low">Low</span>
+              <span class="pill na">N/A</span>
+              <span class="pill unknown">Unknown</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="detail" class="page">
+        <div class="page-title">
+          <div>
+            <h2>Service Detail</h2>
+            <p>Selected service KPI structure, source systems, observations, and follow-up questions.</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="panel">
+            <h3 id="detailTitle">Service</h3>
+            <table>
+              <tbody id="serviceSummary"></tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <h3>Readiness & Evidence</h3>
+            <div id="readinessSummary"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h3>KPI Table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:25%">KPI</th>
+                <th style="width:12%">Target</th>
+                <th style="width:16%">Target status</th>
+                <th style="width:16%">Definition status</th>
+                <th style="width:14%">RAG</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody id="kpiTable"></tbody>
+          </table>
+        </div>
+
+        <div class="grid two" style="margin-top:14px;">
+          <div class="panel">
+            <h3>Current Observations</h3>
+            <ul id="issuesList" class="split-list"></ul>
+          </div>
+          <div class="panel">
+            <h3>Follow-up Questions</h3>
+            <ul id="followList" class="split-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="readiness" class="page">
+        <div class="page-title">
+          <div>
+            <h2>Data Readiness & Follow-up</h2>
+            <p>Evidence gaps and follow-up actions before dashboard schema is locked.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Readiness Matrix</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:20%">Service</th>
+                <th style="width:14%">Readiness</th>
+                <th style="width:22%">Evidence</th>
+                <th>Current issues / observations</th>
+              </tr>
+            </thead>
+            <tbody id="readinessTable"></tbody>
+          </table>
+        </div>
+        <div class="panel" style="margin-top:14px;">
+          <h3>Open Follow-up Actions</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:18%">Category</th>
+                <th>Question / task</th>
+                <th style="width:18%">Owner</th>
+                <th style="width:9%">Priority</th>
+              </tr>
+            </thead>
+            <tbody id="followupTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="input" class="page">
+        <div class="page-title">
+          <div>
+            <h2>Monthly Input Concept</h2>
+            <p>Practical Microsoft 365-compatible monthly KPI input and validation pattern.</p>
+          </div>
+        </div>
+        <div class="grid cards">
+          <div class="card"><div class="label">Expected monthly rows</div><div class="value">12</div><div class="sub">Sample concept rows</div></div>
+          <div class="card"><div class="label">Submitted actual values</div><div class="value">0</div><div class="sub">No invented performance</div></div>
+          <div class="card"><div class="label">Grey statuses</div><div class="value">12</div><div class="sub">Input or definition blocked</div></div>
+          <div class="card"><div class="label">Confirmed targets available</div><div class="value">6</div><div class="sub">Still need actuals/mapping</div></div>
+          <div class="card"><div class="label">Writeback pattern</div><div class="value" style="font-size:20px;">SharePoint</div><div class="sub">or controlled Excel</div></div>
+          <div class="card"><div class="label">Refresh cadence</div><div class="value" style="font-size:20px;">Monthly</div><div class="sub">Near-real-time enough</div></div>
+        </div>
+        <div class="panel" style="margin-top:14px;">
+          <h3>Monthly Input Grid</h3>
+          <table class="input-grid">
+            <thead>
+              <tr>
+                <th style="width:10%">Month</th>
+                <th style="width:18%">Service</th>
+                <th style="width:20%">KPI</th>
+                <th style="width:10%">Actual</th>
+                <th style="width:10%">Target</th>
+                <th style="width:12%">RAG</th>
+                <th>Data status</th>
+              </tr>
+            </thead>
+            <tbody id="inputTable"></tbody>
+          </table>
+          <div class="footer-caveat">
+            Power BI should consume this table from SharePoint / Teams-hosted Excel or SharePoint Lists. Direct writeback would require a Power Apps or controlled input layer.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const services = [
+      {id:"SVC001", name:"Property team", type:"Internal team / data owner", readiness:"N/A", manager:"Property team / Michael Chapman response", role:"Data owner / supporting source", evidence:"Manager email response + formal ARL CHRA/MHUD attachment", issues:"Property team is a data owner / operational source, not a standalone service sector. Community / Social Housing includes Housing First and Youth Housing.", follow:"Confirm ownership chain; confirm who inputs, who reviews, who submits."},
+      {id:"SVC002", name:"ARL / Community-Social Housing", type:"Service sector / formal reporting dataset", readiness:"Medium", manager:"Property team / Michael Chapman response", role:"Core prototype candidate", evidence:"Formal CHRA / MHUD annual reporting template + manager email response", issues:"Multiple tenancy-exit-related figures require definition clarification. Urgent / non-urgent repairs are not separately maintained. Tenant satisfaction questions are approximate mappings. Monthly dashboard feed has not been proven.", follow:"Confirm KPM scope, tenancy-exit definitions, RAG targets, and monthly dashboard-ready feed."},
+      {id:"SVC003", name:"Housing First", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC004", name:"Youth Housing", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC005", name:"Sustaining Tenancies", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC006", name:"Merge Café", type:"Service sector", readiness:"Medium-Low", manager:"Paula Bold Wilson", role:"Simple KPI demonstration", evidence:"Service manager email response", issues:"MHUD template not aligned with Recordbase; manual collation; KPI ambiguity; inconsistent data entry; loss of institutional knowledge; recent system changes and retraining required.", follow:"Confirm KPI numerator / denominator, Recordbase fields, Excel tracker, MHUD template, Auckland Council template, and stream modelling."},
+      {id:"SVC007", name:"Whānau Services", type:"Service sector", readiness:"Low", manager:"Sher Gestro response via Maraea; service manager count not confirmed.", role:"Data capture gap priority", evidence:"Service response / questionnaire response", issues:"Substantial data capture gaps. Future desired data fields should not be treated as current captured KPIs.", follow:"Confirm managers, data format, frequency, self-built sheets, current KPIs vs future fields, and reporting-unit split."},
+      {id:"SVC008", name:"ECE - Waimumu Road Preschool & Royal Road Preschool", type:"Service sector", readiness:"Medium", manager:"1 ECE Service Manager covers both centres", role:"Core prototype candidate", evidence:"ECE quality plan / current-practice response", issues:"Multiple templates / versions of truth; Infocare exports manually copied; whānau engagement more qualitative; tracker sample still needed.", follow:"Confirm obligation vs internal KPIs, centre grain, tracker structure, monthly history completeness, and final definition owner."},
+      {id:"SVC009", name:"Addiction counselling", type:"Potential service sector", readiness:"Unknown / Scope confirmation required", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Mentioned in project brief but not evidenced in current-state materials.", follow:"Confirm dashboard scope, owner, KPIs, and source/template."},
+      {id:"SVC010", name:"Social enterprise", type:"Potential service / social enterprise", readiness:"Unknown / Scope confirmation required", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Brief mentions social enterprise; relationship to Merge Café or other services not confirmed.", follow:"Confirm whether Merge Café is the only social enterprise in scope."}
+    ];
+
+    const kpis = [
+      {svc:"SVC002", name:"Rent arrears", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"Requires mapping confirmation", source:"ARL CHRA/MHUD annual template"},
+      {svc:"SVC002", name:"Tenancy exits", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"KPM2/KPM4 definitions not confirmed", source:"ARL CHRA/MHUD annual template"},
+      {svc:"SVC006", name:"Immediate needs met", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
+      {svc:"SVC006", name:"Continued engagement", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
+      {svc:"SVC006", name:"Connected to community services", target:"50%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
+      {svc:"SVC008", name:"Occupancy / utilisation", target:"~90%", targetStatus:"Target mostly stated", definition:"Centre-level grain requires confirmation", source:"Infocare"},
+      {svc:"SVC008", name:"Training compliance", target:">=95%", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"LMS / HR Bamboo"},
+      {svc:"SVC008", name:"Incident reporting timeliness", target:"100% within 24h", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"Incident register"},
+      {svc:"SVC003", name:"Clients placed into permanent housing", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
+      {svc:"SVC004", name:"Number of young people housed", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
+      {svc:"SVC005", name:"Tenancies maintained over 12 months", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
+      {svc:"SVC007", name:"Families receiving intervention", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"Current vs future capture split requires confirmation", source:"Recordbase and manual capture"}
+    ];
+
+    const followups = [
+      {svc:"SVC001", category:"Structure clarification", task:"Clarify relationship between Property team, ARL, APT, Housing First, Youth Housing, and Sustaining Tenancies.", owner:"Property / housing lead", priority:"High"},
+      {svc:"SVC006", category:"KPI definition", task:"Confirm numerator / denominator for the three Merge Café KPIs.", owner:"Paula Bold Wilson", priority:"High"},
+      {svc:"SVC002", category:"Definition clarification", task:"Confirm relationship between KPM2 exits, KPM2 terminations, and KPM4 exits.", owner:"ARL reporting owner", priority:"High"},
+      {svc:"SVC008", category:"Evidence request", task:"Obtain ECE Excel KPI tracker / draft dashboard dataset structure.", owner:"ECE Service Manager", priority:"Medium"},
+      {svc:"SVC007", category:"Data capture", task:"Separate confirmed current contract KPIs from future desired data fields.", owner:"Whānau Services manager", priority:"High"},
+      {svc:"SVC009", category:"Scope confirmation", task:"Confirm whether addiction counselling is in dashboard scope.", owner:"Ann-Marie Searchfield", priority:"High"},
+      {svc:"SVC010", category:"Scope confirmation", task:"Confirm whether Merge Café is the only social enterprise service in scope.", owner:"Ann-Marie Searchfield", priority:"High"}
+    ];
+
+    const monthlyRows = [
+      ["2026-05","ARL / Community-Social Housing","Rent arrears","","","Grey","Monthly feed not proven"],
+      ["2026-05","ARL / Community-Social Housing","Tenancy exits","","","Grey","Definition not confirmed"],
+      ["2026-05","Merge Café","Immediate needs met","","85%","Grey","Definition not confirmed"],
+      ["2026-05","Merge Café","Continued engagement","","85%","Grey","Definition not confirmed"],
+      ["2026-05","Merge Café","Connected to community services","","50%","Grey","Definition not confirmed"],
+      ["2026-05","ECE","Occupancy / utilisation","","~90%","Grey","Monthly value not provided"],
+      ["2026-05","ECE","Training compliance","",">=95%","Grey","Monthly value not provided"],
+      ["2026-05","Housing First","Clients placed into permanent housing","","","Grey","Target not confirmed"]
+    ];
+
+    const pageButtons = document.querySelectorAll(".nav button");
+    const pages = document.querySelectorAll(".page");
+    const serviceFilter = document.getElementById("serviceFilter");
+    const readinessFilter = document.getElementById("readinessFilter");
+    let selectedService = "SVC002";
+
+    function readinessClass(level) {
+      if (level === "Medium") return "medium";
+      if (level === "Medium-Low") return "medium-low";
+      if (level === "Low") return "low";
+      if (level === "N/A") return "na";
+      return "unknown";
+    }
+
+    function filteredServices() {
+      const readiness = readinessFilter.value;
+      return services.filter(s => readiness === "All" || s.readiness === readiness);
+    }
+
+    function renderFilters() {
+      serviceFilter.innerHTML = services.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+      serviceFilter.value = selectedService;
+    }
+
+    function renderOverview() {
+      const cards = document.getElementById("serviceCards");
+      cards.innerHTML = filteredServices().map(s => `
+        <div class="service-card ${s.id === selectedService ? "selected" : ""}" data-service="${s.id}">
+          <h4>${s.name}</h4>
+          <span class="pill ${readinessClass(s.readiness)}">${s.readiness.replace("Unknown / Scope confirmation required","Unknown scope")}</span>
+          <p>${s.role}</p>
+        </div>`).join("");
+      cards.querySelectorAll(".service-card").forEach(card => {
+        card.addEventListener("click", () => {
+          selectedService = card.dataset.service;
+          serviceFilter.value = selectedService;
+          openPage("detail");
+          renderAll();
+        });
+      });
+
+      const counts = services.reduce((acc, s) => {
+        acc[s.readiness] = (acc[s.readiness] || 0) + 1;
+        return acc;
+      }, {});
+      const order = ["Medium", "Medium-Low", "Low", "N/A", "Unknown / Scope confirmation required"];
+      const max = Math.max(...Object.values(counts));
+      document.getElementById("readinessBars").innerHTML = order.map(level => {
+        const count = counts[level] || 0;
+        return `<div class="bar-row">
+          <div>${level}</div>
+          <div class="bar-track"><div class="bar-fill ${readinessClass(level)}" style="width:${(count / max) * 100}%"></div></div>
+          <div>${count}</div>
+        </div>`;
+      }).join("");
+    }
+
+    function renderDetail() {
+      const s = services.find(x => x.id === selectedService) || services[1];
+      document.getElementById("detailTitle").textContent = s.name;
+      document.getElementById("serviceSummary").innerHTML = `
+        <tr><th>Entity type</th><td>${s.type}</td></tr>
+        <tr><th>Service manager</th><td>${s.manager}</td></tr>
+        <tr><th>Design role</th><td>${s.role}</td></tr>
+      `;
+      document.getElementById("readinessSummary").innerHTML = `
+        <p><span class="pill ${readinessClass(s.readiness)}">${s.readiness}</span></p>
+        <p><strong>Evidence:</strong> ${s.evidence}</p>
+      `;
+      const rows = kpis.filter(k => k.svc === s.id);
+      document.getElementById("kpiTable").innerHTML = (rows.length ? rows : [{name:"No service-specific KPI rows confirmed", target:"", targetStatus:"", definition:"", source:""}]).map(k => `
+        <tr>
+          <td>${k.name}</td>
+          <td>${k.target}</td>
+          <td>${k.targetStatus}</td>
+          <td>${k.definition}</td>
+          <td><span class="pill rag-grey">Grey</span></td>
+          <td>${k.source}</td>
+        </tr>
+      `).join("");
+      document.getElementById("issuesList").innerHTML = s.issues.split(". ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
+      document.getElementById("followList").innerHTML = s.follow.split("; ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
+    }
+
+    function renderReadiness() {
+      document.getElementById("readinessTable").innerHTML = filteredServices().map(s => `
+        <tr>
+          <td>${s.name}</td>
+          <td><span class="pill ${readinessClass(s.readiness)}">${s.readiness}</span></td>
+          <td>${s.evidence}</td>
+          <td>${s.issues}</td>
+        </tr>
+      `).join("");
+      document.getElementById("followupTable").innerHTML = followups.map(f => `
+        <tr>
+          <td>${f.category}</td>
+          <td>${f.task}</td>
+          <td>${f.owner}</td>
+          <td>${f.priority}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderInput() {
+      document.getElementById("inputTable").innerHTML = monthlyRows.map(row => `
+        <tr>
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td><input aria-label="Actual value" placeholder="Input" value="${row[3]}"></td>
+          <td>${row[4]}</td>
+          <td><span class="pill rag-grey">${row[5]}</span></td>
+          <td>${row[6]}</td>
+        </tr>
+      `).join("");
+    }
+
+    function openPage(pageId) {
+      pageButtons.forEach(b => b.classList.toggle("active", b.dataset.page === pageId));
+      pages.forEach(p => p.classList.toggle("active", p.id === pageId));
+    }
+
+    function renderAll() {
+      renderOverview();
+      renderDetail();
+      renderReadiness();
+      renderInput();
+    }
+
+    pageButtons.forEach(btn => btn.addEventListener("click", () => openPage(btn.dataset.page)));
+    serviceFilter.addEventListener("change", e => { selectedService = e.target.value; renderAll(); });
+    readinessFilter.addEventListener("change", renderAll);
+
+    renderFilters();
+    renderAll();
+  </script>
+</body>
+</html>
