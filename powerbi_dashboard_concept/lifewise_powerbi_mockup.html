@@ -11,13 +11,15 @@
       --line: #d9dee8;
       --bg: #f4f6f9;
       --panel: #ffffff;
-      --blue: #1f77b4;
-      --blue-dark: #0f3f64;
+      --blue: #118DFF;
+      --blue-dark: #113f67;
       --green: #2e7d32;
       --amber: #b7791f;
       --red: #b42318;
       --grey: #8a94a6;
       --purple: #6941c6;
+      --warn-bg: #fff8e1;
+      --warn-ink: #856404;
       --shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
     }
 
@@ -27,18 +29,19 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: "Segoe UI", "Open Sans", Arial, sans-serif;
       font-size: 14px;
     }
 
     header {
-      height: 64px;
+      min-height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 24px;
+      gap: 24px;
+      padding: 10px 24px;
       color: white;
-      background: #113f67;
+      background: var(--blue-dark);
       border-bottom: 4px solid #f2c94c;
     }
 
@@ -50,7 +53,7 @@
 
     header .context {
       font-size: 12px;
-      opacity: 0.9;
+      opacity: 0.92;
       text-align: right;
       line-height: 1.35;
     }
@@ -67,27 +70,7 @@
       background: #fbfcfe;
     }
 
-    main {
-      padding: 18px;
-    }
-
-    .slicer-label {
-      display: block;
-      margin: 14px 0 6px;
-      color: #344054;
-      font-size: 12px;
-      font-weight: 650;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 9px 10px;
-      border: 1px solid #cfd6e4;
-      border-radius: 4px;
-      background: white;
-      color: var(--ink);
-      font: inherit;
-    }
+    main { padding: 18px; }
 
     .nav {
       display: grid;
@@ -98,7 +81,7 @@
     .nav button {
       padding: 10px 12px;
       border: 1px solid #cad3e1;
-      border-radius: 4px;
+      border-radius: 2px;
       background: white;
       color: #243b53;
       text-align: left;
@@ -112,6 +95,26 @@
       border-color: var(--blue);
     }
 
+    .slicer-label {
+      display: block;
+      margin: 14px 0 6px;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #cfd6e4;
+      border-radius: 2px;
+      background: white;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    textarea { min-height: 78px; resize: vertical; }
+
     .note {
       padding: 10px;
       border-left: 4px solid var(--grey);
@@ -121,6 +124,18 @@
       line-height: 1.4;
     }
 
+    .warning-banner {
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border: 1px solid #f2d98d;
+      border-left: 5px solid #e0a800;
+      border-radius: 2px;
+      background: var(--warn-bg);
+      color: var(--warn-ink);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .page { display: none; }
     .page.active { display: block; }
 
@@ -128,6 +143,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+      gap: 14px;
       margin-bottom: 14px;
     }
 
@@ -147,28 +163,18 @@
       gap: 14px;
     }
 
-    .grid.cards {
-      grid-template-columns: repeat(6, minmax(120px, 1fr));
-    }
-
-    .grid.two {
-      grid-template-columns: 1.2fr 0.8fr;
-    }
-
-    .grid.three {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+    .grid.cards { grid-template-columns: repeat(4, minmax(150px, 1fr)); }
+    .grid.two { grid-template-columns: 1.2fr 0.8fr; }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
 
     .panel, .card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 2px;
       box-shadow: var(--shadow);
     }
 
-    .panel {
-      padding: 14px;
-    }
+    .panel { padding: 14px; }
 
     .panel h3 {
       margin: 0 0 10px;
@@ -178,7 +184,7 @@
 
     .card {
       padding: 13px;
-      min-height: 86px;
+      min-height: 96px;
     }
 
     .card .label {
@@ -197,7 +203,11 @@
       margin-top: 6px;
       color: var(--muted);
       font-size: 12px;
+      line-height: 1.35;
     }
+
+    .trend { margin-top: 8px; font-size: 12px; font-weight: 700; }
+    .trend.green { color: var(--green); }
 
     table {
       width: 100%;
@@ -226,14 +236,64 @@
       line-height: 1.35;
     }
 
+    tr.clickable { cursor: pointer; }
+    tr.clickable:hover td { background: #f5f9ff; }
+    tr.muted-row { opacity: 0.72; }
+
     .pill {
       display: inline-flex;
       align-items: center;
-      min-height: 24px;
+      min-height: 22px;
       padding: 3px 8px;
       border-radius: 999px;
       color: white;
       font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      margin: 2px 4px 2px 0;
+      padding: 2px 6px;
+      border-radius: 2px;
+      background: #eef2f7;
+      color: #344054;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .data-real {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: 4px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      background: #eef2f7;
+      color: #344054;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .illustrative-tag {
+      color: #8a94a6;
+      font-size: 11px;
+      font-style: italic;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .illustrative {
+      color: #667085;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .real-value {
+      color: #243b53;
       font-weight: 700;
       white-space: nowrap;
     }
@@ -244,12 +304,82 @@
     .na { background: var(--grey); }
     .unknown { background: var(--purple); }
     .rag-grey { background: var(--grey); }
+    .rag-green { background: var(--green); }
+    .rag-amber { background: var(--amber); }
+    .rag-red { background: var(--red); }
 
-    .legend {
+    .rag-cell {
+      display: grid;
+      gap: 5px;
+      min-height: 54px;
+    }
+
+    .rag-square {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      border-radius: 2px;
+      flex: 0 0 auto;
+    }
+
+    .rag-line {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+      align-items: center;
+      gap: 6px;
+      font-weight: 650;
+    }
+
+    .rag-green-square { background: var(--green); }
+    .rag-amber-square { background: var(--amber); }
+    .rag-red-square { background: var(--red); }
+    .rag-grey-square { background: var(--grey); }
+
+    .small {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .historical-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 6px;
+      border: 1px solid #cfd6e4;
+      border-radius: 4px;
+      color: #475467;
+      background: #FAF9F8;
+      font-size: 11px;
+      font-style: italic;
+    }
+
+    .mini-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .mini-kpi-card {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: #fff;
+      min-height: 168px;
+    }
+
+    .mini-kpi-card h4 {
+      margin: 0 0 8px;
+      color: #102a43;
+      font-size: 13px;
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 72px;
+      margin-top: 8px;
+      display: block;
+      background: #fbfcfe;
+      border: 1px solid #edf0f5;
+      border-radius: 2px;
     }
 
     .service-cards {
@@ -259,12 +389,12 @@
     }
 
     .service-card {
+      min-height: 100px;
       padding: 10px;
       border: 1px solid #d8deea;
-      border-radius: 6px;
+      border-radius: 2px;
       background: white;
       cursor: pointer;
-      min-height: 106px;
     }
 
     .service-card.selected {
@@ -285,6 +415,46 @@
       line-height: 1.35;
     }
 
+    .alert-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .alert-item {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 10px;
+      padding: 10px 10px 10px 12px;
+      border: 1px solid #e4e8f0;
+      border-left-width: 4px;
+      border-radius: 2px;
+      background: #fcfcfd;
+    }
+
+    .alert-item.red { border-left-color: var(--red); }
+    .alert-item.amber { border-left-color: var(--amber); }
+
+    .alert-title {
+      color: #102a43;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .alert-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .alert-owner {
+      align-self: center;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: right;
+    }
+
     .split-list {
       display: grid;
       gap: 8px;
@@ -295,7 +465,7 @@
     .split-list li {
       padding: 9px;
       border: 1px solid #e4e8f0;
-      border-radius: 4px;
+      border-radius: 2px;
       background: #fcfcfd;
       font-size: 12.5px;
       line-height: 1.35;
@@ -323,10 +493,102 @@
       background: var(--blue);
     }
 
-    .input-grid td input {
-      min-width: 84px;
-      padding: 6px;
-      font-size: 12px;
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .input-form {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .input-form .wide { grid-column: span 2; }
+    .input-form .full { grid-column: 1 / -1; }
+
+    .input-ribbon {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border: 1px solid #E1DFDD;
+      border-radius: 2px;
+      background: #F8F8F8;
+    }
+
+    .status-bar {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .kpm-card {
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .kpm-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .kpm-head h4 {
+      margin: 0;
+      color: #102a43;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: white;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border: 1px solid #cfd6e4;
+      border-radius: 2px;
+      background: white;
+      color: #243b53;
+      font-weight: 700;
+    }
+
+    .btn.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
     }
 
     .footer-caveat {
@@ -339,7 +601,10 @@
     @media (max-width: 1100px) {
       .shell { grid-template-columns: 1fr; }
       aside { border-right: 0; border-bottom: 1px solid var(--line); }
-      .grid.cards, .grid.two, .grid.three, .service-cards { grid-template-columns: 1fr; }
+      .grid.cards, .grid.two, .grid.three, .input-form, .mini-kpi-grid, .service-cards { grid-template-columns: 1fr; }
+      .input-form .wide, .input-form .full { grid-column: auto; }
+      .alert-item { grid-template-columns: 1fr; }
+      .alert-owner { text-align: left; }
     }
   </style>
 </head>
@@ -347,21 +612,21 @@
   <header>
     <div>
       <h1>Lifewise KPI Dashboard Concept</h1>
-      <div>Power BI-style operational reporting mockup</div>
+      <div>Power BI-style operational reporting mockup for Ann-Marie's portfolio oversight</div>
     </div>
     <div class="context">
       Source: service_level_master_current_state_v0.4_ece_quality_plan.xlsx<br>
-      Monthly input concept; grey means target, definition, source field, or data is not confirmed.
+      Concept only; grey means target, definition, source field, or current data is not confirmed.
     </div>
   </header>
 
   <div class="shell">
     <aside>
       <div class="nav">
-        <button class="active" data-page="overview">Portfolio Overview</button>
+        <button class="active" data-page="performance">Portfolio KPI Performance</button>
         <button data-page="detail">Service Detail</button>
-        <button data-page="readiness">Data Readiness & Follow-up</button>
-        <button data-page="input">Monthly Input Concept</button>
+        <button data-page="input">Service Manager Input</button>
+        <button data-page="readiness">Project & Data Readiness</button>
       </div>
 
       <label class="slicer-label" for="serviceFilter">Service filter</label>
@@ -377,56 +642,88 @@
         <option>Unknown / Scope confirmation required</option>
       </select>
 
-      <div class="slicer-label">Status rule</div>
+      <div class="slicer-label">RAG rule</div>
       <div class="note">
-        RAG is only calculated where KPI definition, target, source mapping, and monthly actual value are confirmed. Otherwise the status is grey.
+        RAG is direction-aware. Higher-is-better, lower-is-better, and SLA metrics use different thresholds. Grey overrides all other states when actuals, targets, definitions, or source fields are unconfirmed.
       </div>
     </aside>
 
     <main>
-      <section id="overview" class="page active">
+      <section id="performance" class="page active">
+        <div class="warning-banner">
+          ⚠ Dashboard concept demonstration. ARL repairs (70%) and tenancy figures (107/37/94) sourced from Lifewise CHRA 2025/26 template. Targets sourced from service responses. Items marked <strong>[Illustrative]</strong> are placeholder values to demonstrate dashboard logic - real values to be supplied by Lifewise.
+        </div>
+
         <div class="page-title">
           <div>
-            <h2>Portfolio Overview</h2>
-            <p>Service coverage, readiness, prototype candidates, and discovery areas.</p>
+            <h2>Portfolio KPI Performance</h2>
+            <p>Ann-Marie's at-a-glance service and contract KPI view, with real evidence separated from illustrative demonstration values.</p>
           </div>
         </div>
 
         <div class="grid cards">
-          <div class="card"><div class="label">Total rows</div><div class="value">10</div><div class="sub">Includes scope confirmation</div></div>
-          <div class="card"><div class="label">Medium</div><div class="value">2</div><div class="sub">ARL, ECE</div></div>
-          <div class="card"><div class="label">Medium-Low</div><div class="value">1</div><div class="sub">Merge Café</div></div>
-          <div class="card"><div class="label">Low</div><div class="value">4</div><div class="sub">Discovery needed</div></div>
-          <div class="card"><div class="label">Unknown scope</div><div class="value">2</div><div class="sub">Brief-only items</div></div>
-          <div class="card"><div class="label">High-priority follow-ups</div><div class="value">14</div><div class="sub">Open concept actions</div></div>
+          <div class="card">
+            <div class="label">KPIs meeting target</div>
+            <div class="value">67% <span class="illustrative">[Illustrative]</span></div>
+            <div class="sub">Demonstration metric only - based on illustrative current-month values for ARL, ECE, and Merge Café.</div>
+            <div class="trend green">+4% vs last month <span class="illustrative">[Illustrative]</span></div>
+          </div>
+          <div class="card">
+            <div class="label">Red - action needed</div>
+            <div class="value" style="color:var(--red);">2 <span class="illustrative">[Illustrative]</span></div>
+            <div class="sub">Across 2 services; illustrative metric based on ARL + ECE + Merge Café demonstration values only.</div>
+          </div>
+          <div class="card">
+            <div class="label">Amber - at risk</div>
+            <div class="value" style="color:var(--amber);">3 <span class="illustrative">[Illustrative]</span></div>
+            <div class="sub">Trending toward target breach; illustrative metric based on ARL + ECE + Merge Café demonstration values only.</div>
+          </div>
+          <div class="card">
+            <div class="label">Submissions on time</div>
+            <div class="value" style="color:var(--grey);">TBC</div>
+            <div class="sub">Requires monthly submission log - not yet supplied by Lifewise. 9 rows shown; 2 are scope placeholders; 7 services in confirmed scope.</div>
+          </div>
         </div>
 
-        <div class="grid two" style="margin-top:14px;">
-          <div class="panel">
-            <h3>Service Cards</h3>
-            <div id="serviceCards" class="service-cards"></div>
+        <div class="panel" style="margin-top:14px;">
+          <h3>Service × KPI Performance Matrix</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:19%">Service</th>
+                <th>KPI 1</th>
+                <th>KPI 2</th>
+                <th>KPI 3</th>
+                <th>KPI 4</th>
+                <th>KPI 5</th>
+                <th style="width:13%">Overall</th>
+                <th style="width:13%">Contract</th>
+              </tr>
+            </thead>
+            <tbody id="performanceMatrix"></tbody>
+          </table>
+          <div class="footer-caveat">
+            Grey cells indicate KPI definition, target, source field, or current evidence is not confirmed. See Page 4 (Project & Data Readiness) for detail. Real data sources: Lifewise CHRA 2025/26 Annual Monitoring Template; Lifewise ECE Quality Plan 2026; Lifewise Merge Café Service Manager response (May 2026); Mana Whānau Final Evaluation 2020.
           </div>
-          <div class="panel">
-            <h3>Readiness Distribution</h3>
-            <div id="readinessBars"></div>
-            <div class="legend">
-              <span class="pill medium">Medium</span>
-              <span class="pill medium-low">Medium-Low</span>
-              <span class="pill low">Low</span>
-              <span class="pill na">N/A</span>
-              <span class="pill unknown">Unknown</span>
-            </div>
-          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h3>Alerts Requiring Attention</h3>
+          <div id="alertList" class="alert-list"></div>
         </div>
       </section>
 
       <section id="detail" class="page">
+        <div class="warning-banner">
+          ⚠ Dashboard concept demonstration. Real data shown where available (see source labels). <span class="illustrative-tag">[Illustrative]</span> tags indicate placeholder values to demonstrate dashboard logic. Real performance data to be supplied by Lifewise.
+        </div>
         <div class="page-title">
           <div>
             <h2>Service Detail</h2>
-            <p>Selected service KPI structure, source systems, observations, and follow-up questions.</p>
+            <p>Selected service KPI snapshot, source systems, observations, and follow-up questions.</p>
           </div>
         </div>
+
         <div class="grid two">
           <div class="panel">
             <h3 id="detailTitle">Service</h3>
@@ -434,27 +731,44 @@
               <tbody id="serviceSummary"></tbody>
             </table>
           </div>
-          <div class="panel">
-            <h3>Readiness & Evidence</h3>
-            <div id="readinessSummary"></div>
-          </div>
+        </div>
+
+        <div class="note" style="margin-top:14px;">
+          Design role is a project-team assessment based on current-state evidence, not a confirmed client statement.
+        </div>
+
+        <div class="panel" id="snapshotPanel" style="margin-top:14px;">
+          <h3>KPI Performance Snapshot</h3>
+          <div id="detailSnapshot"></div>
         </div>
 
         <div class="panel" style="margin-top:14px;">
-          <h3>KPI Table</h3>
+          <h3>KPI Detail</h3>
           <table>
             <thead>
               <tr>
-                <th style="width:25%">KPI</th>
-                <th style="width:12%">Target</th>
-                <th style="width:16%">Target status</th>
-                <th style="width:16%">Definition status</th>
-                <th style="width:14%">RAG</th>
-                <th>Source</th>
+                <th style="width:20%">KPI</th>
+                <th style="width:11%">Actual</th>
+                <th style="width:11%">Target</th>
+                <th style="width:13%">Direction</th>
+                <th style="width:12%">RAG</th>
+                <th>Evidence / caveat</th>
               </tr>
             </thead>
-            <tbody id="kpiTable"></tbody>
+            <tbody id="detailKpiTable"></tbody>
           </table>
+        </div>
+
+        <div class="panel" id="historicalPanel" style="display:none; margin-top:14px;">
+          <h3>Historical evaluation findings</h3>
+          <div id="historicalContent"></div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h3>Monthly Trend Placeholder</h3>
+          <p class="footer-caveat">
+            Trend view will appear once repeated monthly submissions are available. Requires at least 3 monthly reporting periods.
+          </p>
         </div>
 
         <div class="grid two" style="margin-top:14px;">
@@ -469,14 +783,69 @@
         </div>
       </section>
 
-      <section id="readiness" class="page">
+      <section id="input" class="page">
+        <div class="warning-banner">
+          ⚠ Dashboard concept demonstration. Real data shown where available (see source labels). <span class="illustrative-tag">[Illustrative]</span> tags indicate placeholder values to demonstrate dashboard logic. Real performance data to be supplied by Lifewise.
+        </div>
         <div class="page-title">
           <div>
-            <h2>Data Readiness & Follow-up</h2>
-            <p>Evidence gaps and follow-up actions before dashboard schema is locked.</p>
+            <h2>Service Manager Input</h2>
+            <p>Standardised monthly entry concept for Microsoft 365, designed for SharePoint Lists, controlled Excel, or a Power Apps form.</p>
           </div>
         </div>
+
         <div class="panel">
+          <label class="slicer-label" for="inputService">Select your service</label>
+          <select id="inputService"></select>
+        </div>
+        <div id="inputWorkspace" style="margin-top:14px;"></div>
+      </section>
+
+      <section id="readiness" class="page">
+        <div class="note" style="margin-bottom:14px;">
+          This page tracks the project team's current-state assessment and evidence gaps. It supports Deliverable 1 (Current State Assessment). For operational KPI monitoring, see Page 1 (Portfolio KPI Performance).
+        </div>
+        <div class="page-title">
+          <div>
+            <h2>Project & Data Readiness</h2>
+            <p>Evidence gaps, scope confirmation, and follow-up actions before dashboard schema is locked.</p>
+          </div>
+        </div>
+
+        <div class="grid cards" style="grid-template-columns: repeat(6, minmax(120px, 1fr));">
+          <div class="card"><div class="label">Total rows</div><div class="value">10</div><div class="sub">Includes property team and scope placeholders</div></div>
+          <div class="card"><div class="label">Medium</div><div class="value">2</div><div class="sub">ARL, ECE</div></div>
+          <div class="card"><div class="label">Medium-Low</div><div class="value">1</div><div class="sub">Merge Café</div></div>
+          <div class="card"><div class="label">Low</div><div class="value">4</div><div class="sub">Discovery needed</div></div>
+          <div class="card"><div class="label">Unknown scope</div><div class="value">2</div><div class="sub">Scope confirmation</div></div>
+          <div class="card"><div class="label">Follow-up actions</div><div id="followupCount" class="value">0</div><div class="sub">Open questions</div></div>
+        </div>
+
+        <div class="grid two" style="margin-top:14px;">
+          <div class="panel">
+            <h3>Readiness Distribution</h3>
+            <div id="readinessBars"></div>
+            <div class="legend">
+              <span class="pill medium">Medium</span>
+              <span class="pill medium-low">Medium-Low</span>
+              <span class="pill low">Low</span>
+              <span class="pill na">N/A</span>
+              <span class="pill unknown">Unknown</span>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Current State Evidence Completeness</h3>
+            <div id="ragBars"></div>
+            <div class="footer-caveat">Grey indicates data, target, definition, or source field is not confirmed.</div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
+          <h3>Service Cards</h3>
+          <div id="serviceCards" class="service-cards"></div>
+        </div>
+
+        <div class="panel" style="margin-top:14px;">
           <h3>Readiness Matrix</h3>
           <table>
             <thead>
@@ -490,6 +859,7 @@
             <tbody id="readinessTable"></tbody>
           </table>
         </div>
+
         <div class="panel" style="margin-top:14px;">
           <h3>Open Follow-up Actions</h3>
           <table>
@@ -505,73 +875,36 @@
           </table>
         </div>
       </section>
-
-      <section id="input" class="page">
-        <div class="page-title">
-          <div>
-            <h2>Monthly Input Concept</h2>
-            <p>Practical Microsoft 365-compatible monthly KPI input and validation pattern.</p>
-          </div>
-        </div>
-        <div class="grid cards">
-          <div class="card"><div class="label">Expected monthly rows</div><div class="value">12</div><div class="sub">Sample concept rows</div></div>
-          <div class="card"><div class="label">Submitted actual values</div><div class="value">0</div><div class="sub">No invented performance</div></div>
-          <div class="card"><div class="label">Grey statuses</div><div class="value">12</div><div class="sub">Input or definition blocked</div></div>
-          <div class="card"><div class="label">Confirmed targets available</div><div class="value">6</div><div class="sub">Still need actuals/mapping</div></div>
-          <div class="card"><div class="label">Writeback pattern</div><div class="value" style="font-size:20px;">SharePoint</div><div class="sub">or controlled Excel</div></div>
-          <div class="card"><div class="label">Refresh cadence</div><div class="value" style="font-size:20px;">Monthly</div><div class="sub">Near-real-time enough</div></div>
-        </div>
-        <div class="panel" style="margin-top:14px;">
-          <h3>Monthly Input Grid</h3>
-          <table class="input-grid">
-            <thead>
-              <tr>
-                <th style="width:10%">Month</th>
-                <th style="width:18%">Service</th>
-                <th style="width:20%">KPI</th>
-                <th style="width:10%">Actual</th>
-                <th style="width:10%">Target</th>
-                <th style="width:12%">RAG</th>
-                <th>Data status</th>
-              </tr>
-            </thead>
-            <tbody id="inputTable"></tbody>
-          </table>
-          <div class="footer-caveat">
-            Power BI should consume this table from SharePoint / Teams-hosted Excel or SharePoint Lists. Direct writeback would require a Power Apps or controlled input layer.
-          </div>
-        </div>
-      </section>
     </main>
   </div>
 
   <script>
     const services = [
-      {id:"SVC001", name:"Property team", type:"Internal team / data owner", readiness:"N/A", manager:"Property team / Michael Chapman response", role:"Data owner / supporting source", evidence:"Manager email response + formal ARL CHRA/MHUD attachment", issues:"Property team is a data owner / operational source, not a standalone service sector. Community / Social Housing includes Housing First and Youth Housing.", follow:"Confirm ownership chain; confirm who inputs, who reviews, who submits."},
-      {id:"SVC002", name:"ARL / Community-Social Housing", type:"Service sector / formal reporting dataset", readiness:"Medium", manager:"Property team / Michael Chapman response", role:"Core prototype candidate", evidence:"Formal CHRA / MHUD annual reporting template + manager email response", issues:"Multiple tenancy-exit-related figures require definition clarification. Urgent / non-urgent repairs are not separately maintained. Tenant satisfaction questions are approximate mappings. Monthly dashboard feed has not been proven.", follow:"Confirm KPM scope, tenancy-exit definitions, RAG targets, and monthly dashboard-ready feed."},
-      {id:"SVC003", name:"Housing First", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
-      {id:"SVC004", name:"Youth Housing", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
-      {id:"SVC005", name:"Sustaining Tenancies", type:"Service sector", readiness:"Low", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
-      {id:"SVC006", name:"Merge Café", type:"Service sector", readiness:"Medium-Low", manager:"Paula Bold Wilson", role:"Simple KPI demonstration", evidence:"Service manager email response", issues:"MHUD template not aligned with Recordbase; manual collation; KPI ambiguity; inconsistent data entry; loss of institutional knowledge; recent system changes and retraining required.", follow:"Confirm KPI numerator / denominator, Recordbase fields, Excel tracker, MHUD template, Auckland Council template, and stream modelling."},
-      {id:"SVC007", name:"Whānau Services", type:"Service sector", readiness:"Low", manager:"Sher Gestro response via Maraea; service manager count not confirmed.", role:"Data capture gap priority", evidence:"Service response / questionnaire response", issues:"Substantial data capture gaps. Future desired data fields should not be treated as current captured KPIs.", follow:"Confirm managers, data format, frequency, self-built sheets, current KPIs vs future fields, and reporting-unit split."},
-      {id:"SVC008", name:"ECE - Waimumu Road Preschool & Royal Road Preschool", type:"Service sector", readiness:"Medium", manager:"1 ECE Service Manager covers both centres", role:"Core prototype candidate", evidence:"ECE quality plan / current-practice response", issues:"Multiple templates / versions of truth; Infocare exports manually copied; whānau engagement more qualitative; tracker sample still needed.", follow:"Confirm obligation vs internal KPIs, centre grain, tracker structure, monthly history completeness, and final definition owner."},
-      {id:"SVC009", name:"Addiction counselling", type:"Potential service sector", readiness:"Unknown / Scope confirmation required", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Mentioned in project brief but not evidenced in current-state materials.", follow:"Confirm dashboard scope, owner, KPIs, and source/template."},
-      {id:"SVC010", name:"Social enterprise", type:"Potential service / social enterprise", readiness:"Unknown / Scope confirmation required", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Brief mentions social enterprise; relationship to Merge Café or other services not confirmed.", follow:"Confirm whether Merge Café is the only social enterprise in scope."}
+      {id:"SVC001", name:"Property team", type:"Internal team / data owner", readiness:"N/A", funder:"N/A", frequency:"Monthly review, sometimes weekly; CHRA/MHUD annual reporting", dataSource:"Property Management Systems, finance systems, manually maintained Excel trackers; ARL CHRA/MHUD annual template attached in email chain", systems:"Property Management Systems; finance systems; Excel trackers", manager:"Property team / Michael Chapman response", role:"Data owner / supporting source", evidence:"Manager email response + formal ARL CHRA/MHUD attachment", issues:"Property team is a data owner / operational source, not a standalone service sector. Community / Social Housing includes Housing First and Youth Housing.", follow:"Confirm ownership chain; confirm who inputs, who reviews, who submits."},
+      {id:"SVC002", name:"ARL / Community-Social Housing", type:"Service sector / formal reporting dataset", readiness:"Medium", funder:"CHRA regulatory reporting; MHUD / IRRS contractual reporting", frequency:"Annual external reporting; monthly/weekly operational review mentioned in property response; monthly dashboard feed TBD", dataSource:"ARL CHRA/MHUD annual Excel template", systems:"ARL CHRA/MHUD annual Excel template; property management systems; finance systems; Excel trackers", manager:"Property team / Michael Chapman response; formal reporting owner TBD", role:"Core prototype candidate", evidence:"Formal CHRA / MHUD annual reporting template + manager email response", issues:"Multiple tenancy-exit-related figures require definition clarification. Urgent / non-urgent repairs are not separately maintained. Tenant satisfaction questions are approximate mappings. Monthly dashboard feed has not been proven.", follow:"Confirm KPM scope, tenancy-exit definitions, RAG targets, and monthly dashboard-ready feed."},
+      {id:"SVC003", name:"Housing First", type:"Service sector", readiness:"Low", funder:"Possible funders include MSD / MHUD / Oranga Tamariki / Kāinga Ora, but sector-specific contract allocation is not yet confirmed.", frequency:"Weekly or monthly depending reporting requirements (typical, not confirmed for actual reporting)", dataSource:"Internal case management systems + programme spreadsheets (per email attachment)", systems:"Record Base; Palace; Microsoft Excel; specialised client management platforms", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC004", name:"Youth Housing", type:"Service sector", readiness:"Low", funder:"Possible funders include MSD / MHUD / Oranga Tamariki / Kāinga Ora, but sector-specific contract allocation is not yet confirmed.", frequency:"Weekly or monthly depending reporting requirements (typical, not confirmed for actual reporting)", dataSource:"Internal case management systems + programme spreadsheets (per email attachment)", systems:"Record Base; Palace; Microsoft Excel; specialised client management platforms", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC005", name:"Sustaining Tenancies", type:"Service sector", readiness:"Low", funder:"Possible funders include MSD / MHUD / Oranga Tamariki / Kāinga Ora, but sector-specific contract allocation is not yet confirmed.", frequency:"Weekly or monthly depending reporting requirements (typical, not confirmed for actual reporting)", dataSource:"Internal case management systems + programme spreadsheets (per email attachment)", systems:"Record Base; Palace; Microsoft Excel; specialised client management platforms", manager:"Reported as 1 per sector (typical), named manager not yet confirmed.", role:"Discovery required before dashboarding", evidence:"Background fact sheet / questionnaire-style response", issues:"Current evidence is background-level only. Monthly workflow, final KPI definitions, targets, source fields, and named manager are not confirmed.", follow:"Confirm funder, KPIs, targets, source fields, frequency, spreadsheets, property relationship, and named manager."},
+      {id:"SVC006", name:"Merge Café", type:"Service sector", readiness:"Medium-Low", funder:"MHUD; Auckland Council", frequency:"Monthly for MHUD; annual for Auckland Council", dataSource:"Recordbase primary source; Excel KPI tracking; Microsoft Forms for H&S; Lightspeed for cafe operations", systems:"Recordbase; Excel; Microsoft Forms; Lightspeed", manager:"Paula Bold Wilson", role:"Simple KPI demonstration", evidence:"Service manager email response", issues:"MHUD template not aligned with Recordbase; manual collation; KPI ambiguity; inconsistent data entry; loss of institutional knowledge; recent system changes and retraining required.", follow:"Confirm KPI numerator / denominator, Recordbase fields, Excel tracker, MHUD template, Auckland Council template, and stream modelling."},
+      {id:"SVC007", name:"Whānau Services", type:"Service sector", readiness:"Low", funder:"OT / Mana Whānau; MSD - Whānau Resilience; MoJ - Parenting through Separation", frequency:"TBD (not specified in response)", dataSource:"Recordbase and manual capture", systems:"Recordbase; manual tracking", manager:"Sher Gestro response via Maraea; service manager count not confirmed.", role:"Data capture gap priority", evidence:"Service response / questionnaire response", issues:"Substantial data capture gaps. Future desired data fields should not be treated as current captured KPIs.", follow:"Confirm managers, data format, frequency, self-built sheets, current KPIs vs future fields, and reporting-unit split."},
+      {id:"SVC008", name:"ECE - Waimumu Road Preschool & Royal Road Preschool", type:"Service sector", readiness:"Medium", funder:"Ministry of Education", frequency:"Mostly monthly; training quarterly; routine regulatory checks monthly + annual review cycle", dataSource:"Infocare enrolment/attendance/funding exports; finance reporting; LMS / HR Bamboo; incident, complaints, audit, QI/CAPA registers; evidence folders; Teams/SharePoint", systems:"Infocare; Excel KPI tracker / draft dashboard dataset; Finance reporting; HR Bamboo; Teams / SharePoint; registers and evidence folders", manager:"1 ECE Service Manager covers both centres", role:"Core prototype candidate", evidence:"ECE quality plan / current-practice response", issues:"Multiple templates / versions of truth; Infocare exports manually copied; whānau engagement more qualitative; tracker sample still needed.", follow:"Confirm obligation vs internal KPIs, centre grain, tracker structure, monthly history completeness, and final definition owner."},
+      {id:"SVC009", name:"Addiction counselling", type:"Potential service sector", readiness:"Unknown / Scope confirmation required", funder:"TBD", frequency:"TBD", dataSource:"TBD", systems:"TBD", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Mentioned in project brief but not evidenced in current-state materials.", follow:"Confirm dashboard scope, owner, KPIs, and source/template."},
+      {id:"SVC010", name:"Social enterprise", type:"Potential service / social enterprise", readiness:"Unknown / Scope confirmation required", funder:"TBD", frequency:"TBD", dataSource:"TBD", systems:"TBD", manager:"TBD", role:"Scope confirmation required", evidence:"Project brief only", issues:"Brief mentions social enterprise; relationship to Merge Café or other services not confirmed.", follow:"Confirm whether Merge Café is the only social enterprise in scope."}
     ];
 
     const kpis = [
-      {svc:"SVC002", name:"Rent arrears", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"Requires mapping confirmation", source:"ARL CHRA/MHUD annual template"},
-      {svc:"SVC002", name:"Tenancy exits", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"KPM2/KPM4 definitions not confirmed", source:"ARL CHRA/MHUD annual template"},
-      {svc:"SVC006", name:"Immediate needs met", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
-      {svc:"SVC006", name:"Continued engagement", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
-      {svc:"SVC006", name:"Connected to community services", target:"50%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel"},
-      {svc:"SVC008", name:"Occupancy / utilisation", target:"~90%", targetStatus:"Target mostly stated", definition:"Centre-level grain requires confirmation", source:"Infocare"},
-      {svc:"SVC008", name:"Training compliance", target:">=95%", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"LMS / HR Bamboo"},
-      {svc:"SVC008", name:"Incident reporting timeliness", target:"100% within 24h", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"Incident register"},
-      {svc:"SVC003", name:"Clients placed into permanent housing", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
-      {svc:"SVC004", name:"Number of young people housed", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
-      {svc:"SVC005", name:"Tenancies maintained over 12 months", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems"},
-      {svc:"SVC007", name:"Families receiving intervention", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"Current vs future capture split requires confirmation", source:"Recordbase and manual capture"}
+      {svc:"SVC002", name:"Rent arrears", target:"[Illustrative threshold]", targetStatus:"Target not confirmed", definition:"Requires mapping confirmation", source:"ARL CHRA/MHUD annual template", direction:"lower-better"},
+      {svc:"SVC002", name:"Tenancy exits", target:"Internal threshold TBC", targetStatus:"Definition pending", definition:"KPM2/KPM4 definitions not confirmed", source:"ARL CHRA/MHUD annual template", direction:"lower-better"},
+      {svc:"SVC006", name:"Immediate needs met", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel", direction:"higher-better"},
+      {svc:"SVC006", name:"Continued engagement", target:"85%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel", direction:"higher-better"},
+      {svc:"SVC006", name:"Connected to community services", target:"50%", targetStatus:"Target known", definition:"Numerator / denominator not confirmed", source:"Recordbase; Excel", direction:"higher-better"},
+      {svc:"SVC008", name:"Occupancy / utilisation", target:"~90%", targetStatus:"Target mostly stated", definition:"Centre-level grain requires confirmation", source:"Infocare", direction:"higher-better"},
+      {svc:"SVC008", name:"Training compliance", target:">=95%", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"LMS / HR Bamboo", direction:"sla"},
+      {svc:"SVC008", name:"Incident reporting timeliness", target:"100% within 24h", targetStatus:"Target stated", definition:"Source mapping requires confirmation", source:"Incident register", direction:"sla"},
+      {svc:"SVC003", name:"Clients placed into permanent housing", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems", direction:"higher-better"},
+      {svc:"SVC004", name:"Number of young people housed", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems", direction:"higher-better"},
+      {svc:"SVC005", name:"Tenancies maintained over 12 months", target:"Not confirmed", targetStatus:"Not confirmed", definition:"Not confirmed", source:"Programme spreadsheets / case management systems", direction:"higher-better"},
+      {svc:"SVC007", name:"Families receiving intervention", target:"Not confirmed", targetStatus:"Target not confirmed", definition:"Current vs future capture split requires confirmation", source:"Recordbase and manual capture", direction:"higher-better"}
     ];
 
     const followups = [
@@ -585,20 +918,77 @@
     ];
 
     const monthlyRows = [
-      ["2026-05","ARL / Community-Social Housing","Rent arrears","","","Grey","Monthly feed not proven"],
-      ["2026-05","ARL / Community-Social Housing","Tenancy exits","","","Grey","Definition not confirmed"],
-      ["2026-05","Merge Café","Immediate needs met","","85%","Grey","Definition not confirmed"],
-      ["2026-05","Merge Café","Continued engagement","","85%","Grey","Definition not confirmed"],
-      ["2026-05","Merge Café","Connected to community services","","50%","Grey","Definition not confirmed"],
-      ["2026-05","ECE","Occupancy / utilisation","","~90%","Grey","Monthly value not provided"],
-      ["2026-05","ECE","Training compliance","",">=95%","Grey","Monthly value not provided"],
-      ["2026-05","Housing First","Clients placed into permanent housing","","","Grey","Target not confirmed"]
+      {month:"2026-05", service:"ARL / Community-Social Housing", kpi:"Rent arrears", numerator:"", denominator:"", actual:"", target:"", rag:"Grey", dataStatus:"Monthly feed not proven", comment:"Formal annual evidence exists but monthly dashboard feed is not confirmed.", submittedBy:"TBD", submittedDate:"", evidence:"ARL CHRA/MHUD annual template"},
+      {month:"2026-05", service:"ARL / Community-Social Housing", kpi:"Tenancy exits", numerator:"", denominator:"", actual:"", target:"", rag:"Grey", dataStatus:"Definition not confirmed", comment:"KPM2 and KPM4 definitions require confirmation before reuse.", submittedBy:"TBD", submittedDate:"", evidence:"ARL CHRA/MHUD annual template"},
+      {month:"2026-05", service:"Merge Café", kpi:"Immediate needs met", numerator:"", denominator:"", actual:"", target:"85%", rag:"Grey", dataStatus:"Definition not confirmed", comment:"Target known but numerator / denominator and Recordbase field mapping are not confirmed.", submittedBy:"Paula Bold Wilson", submittedDate:"", evidence:"Recordbase; Excel KPI tracking"},
+      {month:"2026-05", service:"Merge Café", kpi:"Continued engagement", numerator:"", denominator:"", actual:"", target:"85%", rag:"Grey", dataStatus:"Definition not confirmed", comment:"Target known but numerator / denominator and Recordbase field mapping are not confirmed.", submittedBy:"Paula Bold Wilson", submittedDate:"", evidence:"Recordbase; Excel KPI tracking"},
+      {month:"2026-05", service:"Merge Café", kpi:"Connected to community services", numerator:"", denominator:"", actual:"", target:"50%", rag:"Grey", dataStatus:"Definition not confirmed", comment:"Target known but numerator / denominator and Recordbase field mapping are not confirmed.", submittedBy:"Paula Bold Wilson", submittedDate:"", evidence:"Recordbase; Excel KPI tracking"},
+      {month:"2026-05", service:"ECE", kpi:"Occupancy / utilisation", numerator:"", denominator:"", actual:"", target:"~90%", rag:"Grey", dataStatus:"Monthly value not provided", comment:"Target exists in quality plan response but monthly actual is not in current-state file.", submittedBy:"ECE Service Manager", submittedDate:"", evidence:"Infocare; ECE KPI tracker"},
+      {month:"2026-05", service:"ECE", kpi:"Training compliance", numerator:"", denominator:"", actual:"", target:">=95%", rag:"Grey", dataStatus:"Monthly value not provided", comment:"Target exists in quality plan response but monthly actual is not in current-state file.", submittedBy:"ECE Service Manager", submittedDate:"", evidence:"LMS / HR Bamboo"},
+      {month:"2026-05", service:"Housing First", kpi:"Clients placed into permanent housing", numerator:"", denominator:"", actual:"", target:"", rag:"Grey", dataStatus:"Target not confirmed", comment:"Discovery required before dashboarding.", submittedBy:"TBD", submittedDate:"", evidence:"Background fact sheet / questionnaire-style response"}
+    ];
+
+    const performanceRows = [
+      {
+        svc:"SVC002",
+        service:"ARL / Community-Social Housing",
+        contract:"CHRA · MHUD",
+        overall:"3/7 met (illustrative)",
+        cells:[
+          {label:"KPM 1 Rent arrears", status:"Red", value:"$91,261 (4.9%)", tag:"[Illustrative]", note:"Illustrative actual and threshold; lower-is-better.", direction:"lower-better"},
+          {label:"KPM 2 Tenancy exits", status:"Amber", value:"107", tag:"CHRA real", note:"Definition pending; KPM2 terminations = 37; KPM4 exits = 94.", direction:"lower-better"},
+          {label:"KPM 3 Turnaround time", status:"Green", value:"22 days", tag:"[Illustrative]", note:"Illustrative threshold; lower-is-better.", direction:"lower-better"},
+          {label:"KPM 4 Occupancy", status:"Green", value:"90.5%", tag:"[Illustrative]", note:"Illustrative threshold; higher-is-better.", direction:"higher-better"},
+          {label:"KPM 6 Repairs 14d SLA", status:"Red", value:"70%", tag:"CHRA real", note:"169/241 real CHRA value; RAG uses illustrative >=90% threshold.", direction:"sla"}
+        ]
+      },
+      {
+        svc:"SVC008",
+        service:"ECE",
+        contract:"Ministry of Education",
+        overall:"4/5 met (illustrative)",
+        cells:[
+          {label:"Occupancy", status:"Green", value:"91%", tag:"[Illustrative]", note:"Target ~90%; higher-is-better.", direction:"higher-better"},
+          {label:"Training compliance", status:"Green", value:"96%", tag:"[Illustrative]", note:"Target >=95%; SLA/completion.", direction:"sla"},
+          {label:"Incident timeliness", status:"Amber", value:"92%", tag:"[Illustrative]", note:"Target 100% within 24h; SLA/completion.", direction:"sla"},
+          {label:"Audit completion", status:"Green", value:"100%", tag:"[Illustrative]", note:"Target 100%; SLA/completion.", direction:"sla"},
+          {label:"Whānau engagement", status:"Green", value:"85%", tag:"[Illustrative]", note:"Target 80-100%; higher-is-better.", direction:"higher-better"}
+        ]
+      },
+      {
+        svc:"SVC006",
+        service:"Merge Café",
+        contract:"MHUD · Auckland Council",
+        overall:"2/3 met (illustrative)",
+        cells:[
+          {label:"Immediate needs met", status:"Green", value:"87%", tag:"[Illustrative]", note:"Real target 85%; illustrative actual.", direction:"higher-better"},
+          {label:"Continued engagement", status:"Green", value:"86%", tag:"[Illustrative]", note:"Real target 85%; illustrative actual.", direction:"higher-better"},
+          {label:"Community connections", status:"Red", value:"38%", tag:"[Illustrative]", note:"Real target 50%; illustrative actual.", direction:"higher-better"},
+          null,
+          null
+        ]
+      },
+      {svc:"SVC003", service:"Housing First", contract:"Funder allocation TBC", overall:"Evidence pending", greyMessage:"Evidence pending - KPI structure, targets, and source fields require client confirmation."},
+      {svc:"SVC004", service:"Youth Housing", contract:"Funder allocation TBC", overall:"Evidence pending", greyMessage:"Evidence pending - KPI structure, targets, and source fields require client confirmation."},
+      {svc:"SVC005", service:"Sustaining Tenancies", contract:"Funder allocation TBC", overall:"Evidence pending", greyMessage:"Evidence pending - KPI structure, targets, and source fields require client confirmation."},
+      {svc:"SVC007", service:"Whānau Services", contract:"OT · MSD · MoJ", overall:"Current monthly RAG: Grey - data capture gaps", greyMessage:"Current monthly KPI evidence pending.", historical:"89% whānau / 94% tamariki retained safely (Mana Whānau Final Evaluation 2020, n=44/139). Historical evaluation - not current performance."},
+      {svc:"SVC009", service:"Addiction counselling", contract:"TBD", overall:"Scope confirmation required", scopePlaceholder:true, greyMessage:"Scope confirmation required - service awaiting client confirmation on whether in dashboard scope."},
+      {svc:"SVC010", service:"Social enterprise", contract:"TBD", overall:"Scope confirmation required", scopePlaceholder:true, greyMessage:"Scope confirmation required - service awaiting client confirmation on whether in dashboard scope."}
+    ];
+
+    const alerts = [
+      {status:"red", title:"ARL · KPM 6 Non-urgent repairs: 169/241 completed within 14 days (real CHRA value)", sub:"Actual 70% is from CHRA template. RAG status Red based on >=90% illustrative threshold - threshold not confirmed by ARL reporting owner.", owner:"Property Manager", badge:"Mixed source"},
+      {status:"red", title:"ARL · KPM 1 Rent arrears at 4.9% [Illustrative]", sub:"Both actual value and threshold are illustrative for demonstration. Real values to be supplied by ARL reporting owner.", owner:"Property Manager", badge:"Illustrative"},
+      {status:"red", title:"Merge Café · Community connections at 38% [Illustrative]", sub:"Illustrative actual against real target 50% (sourced from Merge Café Service Manager response May 2026). Real monthly performance to be supplied by Paula Bold Wilson.", owner:"Paula Bold Wilson", badge:"Illustrative actual / real target"},
+      {status:"amber", title:"ECE · Incident timeliness at 92% [Illustrative]", sub:"Illustrative actual against real target 100% within 24h (sourced from ECE Quality Plan 2026). Real monthly performance to be supplied by ECE Service Manager.", owner:"ECE Service Manager", badge:"Illustrative actual / real target"},
+      {status:"amber", title:"Whānau Services · Monthly submission overdue", sub:"Data capture gaps prevent monthly KPI submission (per Service Manager response, May 2026).", owner:"Sher Gestro / Whānau team", badge:"Real situation"}
     ];
 
     const pageButtons = document.querySelectorAll(".nav button");
     const pages = document.querySelectorAll(".page");
     const serviceFilter = document.getElementById("serviceFilter");
     const readinessFilter = document.getElementById("readinessFilter");
+    const inputService = document.getElementById("inputService");
     let selectedService = "SVC002";
 
     function readinessClass(level) {
@@ -609,6 +999,15 @@
       return "unknown";
     }
 
+    function ragSquare(status) {
+      const s = (status || "Grey").toLowerCase();
+      return `<span class="rag-square rag-${s}-square"></span>`;
+    }
+
+    function ragPill(status) {
+      return `<span class="pill rag-${status.toLowerCase()}">${status}</span>`;
+    }
+
     function filteredServices() {
       const readiness = readinessFilter.value;
       return services.filter(s => readiness === "All" || s.readiness === readiness);
@@ -617,25 +1016,199 @@
     function renderFilters() {
       serviceFilter.innerHTML = services.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
       serviceFilter.value = selectedService;
+      inputService.innerHTML = services.filter(s => s.type !== "Internal team / data owner").map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+      inputService.value = selectedService === "SVC001" ? "SVC002" : selectedService;
     }
 
-    function renderOverview() {
-      const cards = document.getElementById("serviceCards");
-      cards.innerHTML = filteredServices().map(s => `
-        <div class="service-card ${s.id === selectedService ? "selected" : ""}" data-service="${s.id}">
-          <h4>${s.name}</h4>
-          <span class="pill ${readinessClass(s.readiness)}">${s.readiness.replace("Unknown / Scope confirmation required","Unknown scope")}</span>
-          <p>${s.role}</p>
-        </div>`).join("");
-      cards.querySelectorAll(".service-card").forEach(card => {
-        card.addEventListener("click", () => {
-          selectedService = card.dataset.service;
+    function cellHtml(cell, fallbackMessage) {
+      if (!cell) return `<td class="small">—</td>`;
+      const tagHtml = cell.tag && cell.tag.includes("Illustrative")
+        ? illustrativeTag()
+        : cell.tag ? sourceLabel(cell.label.includes("Repairs") || cell.label.includes("Tenancy") ? "Source: Lifewise CHRA 2025/26 Annual Monitoring Template" : "Source: client-provided document or response") : "";
+      return `<td>
+        <div class="rag-cell">
+          <div class="rag-line">${ragSquare(cell.status)} ${cell.status}</div>
+          <div><strong>${cell.label}</strong></div>
+          <div>${cell.value ? `<span class="${cell.tag && cell.tag.includes("Illustrative") ? "illustrative" : "real-value"}">${cell.value}</span>` : ""} ${tagHtml}</div>
+          <div class="small">${cell.note || fallbackMessage || ""}</div>
+        </div>
+      </td>`;
+    }
+
+    function greyCell(message) {
+      return `<td>
+        <div class="rag-cell">
+          <div class="rag-line">${ragSquare("Grey")} Grey</div>
+          <div class="small">${message}</div>
+        </div>
+      </td>`;
+    }
+
+    function sourceLabel(text) {
+      return `<span class="data-real" title="${text}">📋 Real</span>`;
+    }
+
+    function illustrativeTag(text = "[Illustrative]") {
+      return `<span class="illustrative-tag">${text}</span>`;
+    }
+
+    function sparklineSvg(values, options = {}) {
+      if (!values || !values.length) {
+        return `<div class="sparkline" style="display:flex;align-items:center;justify-content:center;color:#8a94a6;font-size:11px;">Trend pending</div>`;
+      }
+      const width = 260;
+      const height = 72;
+      const pad = 12;
+      const min = options.min ?? Math.min(...values, options.threshold ?? values[0]);
+      const max = options.max ?? Math.max(...values, options.threshold ?? values[0]);
+      const range = Math.max(0.01, max - min);
+      const x = i => pad + (i / (values.length - 1)) * (width - pad * 2);
+      const y = v => height - pad - ((v - min) / range) * (height - pad * 2);
+      const points = values.map((v, i) => `${x(i)},${y(v)}`).join(" ");
+      const threshold = options.threshold === undefined ? "" : `
+        <line x1="${pad}" y1="${y(options.threshold)}" x2="${width - pad}" y2="${y(options.threshold)}" stroke="${options.thresholdColor || "#8a94a6"}" stroke-width="1.5" stroke-dasharray="4 4" />
+        <text x="${pad + 2}" y="${Math.max(11, y(options.threshold) - 3)}" fill="#667085" font-size="9">${options.thresholdLabel || "Target"}</text>
+      `;
+      return `<svg class="sparkline" viewBox="0 0 ${width} ${height}" role="img" aria-label="12 month trend">
+        ${threshold}
+        <polyline points="${points}" fill="none" stroke="${options.lineColor || "#118DFF"}" stroke-width="2.5" />
+        <circle cx="${x(values.length - 1)}" cy="${y(values[values.length - 1])}" r="3" fill="${options.lineColor || "#118DFF"}" />
+        <text x="${width - 112}" y="12" fill="#8a94a6" font-size="9">${options.caption || "[Illustrative trend data]"}</text>
+      </svg>`;
+    }
+
+    function renderPerformance() {
+      document.getElementById("performanceMatrix").innerHTML = performanceRows.map(row => {
+        const cells = row.cells ? row.cells.map(c => cellHtml(c, row.greyMessage)).join("") : Array.from({length:5}, () => greyCell(row.greyMessage)).join("");
+        const historical = row.historical ? `<span class="historical-badge">${row.historical}</span>` : "";
+        return `<tr class="clickable ${row.scopePlaceholder ? "muted-row" : ""}" data-service="${row.svc}">
+          <td><strong>${row.service}</strong>${historical}</td>
+          ${cells}
+          <td>${row.overall}</td>
+          <td>${row.contract}</td>
+        </tr>`;
+      }).join("");
+      document.querySelectorAll("#performanceMatrix tr").forEach(row => {
+        row.addEventListener("click", () => {
+          selectedService = row.dataset.service;
           serviceFilter.value = selectedService;
           openPage("detail");
           renderAll();
         });
       });
 
+      document.getElementById("alertList").innerHTML = alerts.map(a => `
+        <div class="alert-item ${a.status}">
+          <div>
+            <div class="alert-title">${a.title}</div>
+            <div class="alert-sub">${a.sub}</div>
+            <span class="source-chip">${a.badge}</span>
+          </div>
+          <div class="alert-owner">${a.owner}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderDetail() {
+      const s = services.find(x => x.id === selectedService) || services[1];
+      document.getElementById("detailTitle").textContent = s.name;
+      document.getElementById("serviceSummary").innerHTML = `
+        <tr><th>Entity type</th><td>${s.type}</td></tr>
+        <tr><th>Funder / contract</th><td>${s.funder}</td></tr>
+        <tr><th>Reporting frequency</th><td>${s.frequency}</td></tr>
+        <tr><th>Data source</th><td>${s.dataSource}</td></tr>
+        <tr><th>Systems</th><td>${s.systems}</td></tr>
+        <tr><th>Service manager</th><td>${s.manager}</td></tr>
+        <tr><th>Evidence type</th><td>${s.evidence}</td></tr>
+        <tr><th>Data readiness</th><td><span class="pill ${readinessClass(s.readiness)}">${s.readiness}</span></td></tr>
+        <tr><th>Design role</th><td>${s.role}</td></tr>
+      `;
+
+      const perf = performanceRows.find(row => row.svc === s.id);
+      const perfCells = perf && perf.cells ? perf.cells.filter(Boolean) : [];
+      const sparklineMap = {
+        "SVC002::KPM 1 Rent arrears": {values:[3.1,3.2,3.4,3.5,3.8,3.9,4.1,4.2,4.3,4.5,4.6,4.9], min:0, max:6, threshold:3, thresholdLabel:"[Illustrative threshold — not confirmed]", thresholdColor:"#8a94a6"},
+        "SVC006::Community connections": {values:[51,49,50,48,47,46,44,42,41,40,39,38], min:35, max:55, threshold:50, thresholdLabel:"Target 50%", thresholdColor:"#b42318", lineColor:"#b42318"},
+        "SVC008::Occupancy": {values:[89,90,91,92,91,90,89,88,90,91,92,91], min:86, max:94, threshold:90, thresholdLabel:"Target 90%", thresholdColor:"#b42318", lineColor:"#2e7d32"}
+      };
+      if (["SVC002", "SVC006", "SVC008"].includes(s.id)) {
+        document.getElementById("detailSnapshot").innerHTML = `<div class="mini-kpi-grid">${perfCells.map(c => {
+          const spark = sparklineMap[`${s.id}::${c.label}`];
+          const targetText = c.note.includes("Real target") ? c.note.split(";")[0] : c.note.includes("Target") ? c.note.split(";")[0] : "Target / threshold requires confirmation";
+          const tag = c.tag && c.tag.includes("Illustrative") ? illustrativeTag() : sourceLabel(c.label.includes("Tenancy") || c.label.includes("Repairs") ? "Source: Lifewise CHRA 2025/26 Annual Monitoring Template" : "Source: client-provided service response");
+          return `<div class="mini-kpi-card">
+            <h4>${c.label}</h4>
+            <div class="rag-line">${ragSquare(c.status)} ${c.status}</div>
+            <div style="margin-top:8px;"><strong>${c.value}</strong> ${tag}</div>
+            <div class="small"><strong>Target:</strong> ${targetText}</div>
+            ${sparklineSvg(spark && spark.values, spark || {})}
+          </div>`;
+        }).join("")}</div>`;
+      } else if (s.id === "SVC007") {
+        document.getElementById("detailSnapshot").innerHTML = `
+          <div class="note">
+            Current monthly KPI data is pending from Whānau Services team. Historical findings are shown below as reference only and do not drive current month RAG.
+          </div>`;
+      } else {
+        document.getElementById("detailSnapshot").innerHTML = `
+          <div class="note">
+            This service is in Discovery / Scope Confirmation. KPI performance view will appear once KPI structure, targets, and monthly data feed are confirmed.
+          </div>`;
+      }
+
+      const detailRows = perf && perf.cells
+        ? perf.cells.filter(Boolean).map(c => ({
+            name:c.label,
+            actual:`${c.value} ${c.tag || ""}`,
+            target:c.note.includes("target") || c.note.includes("Target") ? c.note : "See evidence / caveat",
+            direction:c.direction,
+            rag:c.status,
+            caveat:c.note
+          }))
+        : kpis.filter(k => k.svc === s.id).map(k => ({
+            name:k.name,
+            actual:"Evidence pending",
+            target:k.target,
+            direction:k.direction,
+            rag:"Grey",
+            caveat:`${k.definition}. Source: ${k.source}`
+          }));
+      document.getElementById("detailKpiTable").innerHTML = (detailRows.length ? detailRows : [{name:"No service-specific KPI rows confirmed", actual:"Evidence pending", target:"TBD", direction:"TBD", rag:"Grey", caveat:"Scope or evidence not confirmed."}]).map(row => `
+        <tr>
+          <td>${row.name}</td>
+          <td>${row.actual.includes("Illustrative") ? `<span class="illustrative">${row.actual}</span>` : row.actual}</td>
+          <td>${row.target}</td>
+          <td>${row.direction}</td>
+          <td>${ragPill(row.rag)}</td>
+          <td>${row.caveat}</td>
+        </tr>
+      `).join("");
+
+      const historicalPanel = document.getElementById("historicalPanel");
+      if (s.id === "SVC007") {
+        historicalPanel.style.display = "block";
+        document.getElementById("historicalContent").innerHTML = `
+          <p><strong>Mana Whānau Final Evaluation (Point & Associates, September 2020)</strong></p>
+          <ul class="split-list">
+            <li>44 whānau participated over 2 years (Auckland: 26)</li>
+            <li>139 tamariki served</li>
+            <li>89% of whānau retained or had tamariki returned</li>
+            <li>94% of tamariki living safely with whānau</li>
+            <li>Ethnic representation: 48% Māori · 27% Pasifika · 37% NZ European</li>
+          </ul>
+          <p class="footer-caveat">Current monthly KPI data pending from Whānau Services team.</p>
+          <p class="footer-caveat">A more recent Mana Whānau Evaluation Report (March 2026) is referenced on the Lifewise public website. The webpage mentions key findings, but the full report has not been provided to the project team. These figures are treated as public webpage findings only, not as a confirmed dashboard data source, and are listed as a follow-up data request.</p>
+        `;
+      } else {
+        historicalPanel.style.display = "none";
+      }
+
+      document.getElementById("issuesList").innerHTML = s.issues.split(". ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
+      document.getElementById("followList").innerHTML = s.follow.split("; ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
+    }
+
+    function renderReadiness() {
+      document.getElementById("followupCount").textContent = followups.length;
       const counts = services.reduce((acc, s) => {
         acc[s.readiness] = (acc[s.readiness] || 0) + 1;
         return acc;
@@ -650,36 +1223,22 @@
           <div>${count}</div>
         </div>`;
       }).join("");
-    }
 
-    function renderDetail() {
-      const s = services.find(x => x.id === selectedService) || services[1];
-      document.getElementById("detailTitle").textContent = s.name;
-      document.getElementById("serviceSummary").innerHTML = `
-        <tr><th>Entity type</th><td>${s.type}</td></tr>
-        <tr><th>Service manager</th><td>${s.manager}</td></tr>
-        <tr><th>Design role</th><td>${s.role}</td></tr>
-      `;
-      document.getElementById("readinessSummary").innerHTML = `
-        <p><span class="pill ${readinessClass(s.readiness)}">${s.readiness}</span></p>
-        <p><strong>Evidence:</strong> ${s.evidence}</p>
-      `;
-      const rows = kpis.filter(k => k.svc === s.id);
-      document.getElementById("kpiTable").innerHTML = (rows.length ? rows : [{name:"No service-specific KPI rows confirmed", target:"", targetStatus:"", definition:"", source:""}]).map(k => `
-        <tr>
-          <td>${k.name}</td>
-          <td>${k.target}</td>
-          <td>${k.targetStatus}</td>
-          <td>${k.definition}</td>
-          <td><span class="pill rag-grey">Grey</span></td>
-          <td>${k.source}</td>
-        </tr>
+      const ragCounts = {Green:0, Amber:0, Red:0, Grey:0};
+      performanceRows.forEach(row => {
+        if (row.scopePlaceholder) return;
+        if (row.cells) row.cells.filter(Boolean).forEach(c => { ragCounts[c.status] += 1; });
+        else ragCounts.Grey += 5;
+      });
+      const ragMax = Math.max(1, ...Object.values(ragCounts));
+      document.getElementById("ragBars").innerHTML = ["Green", "Amber", "Red", "Grey"].map(status => `
+        <div class="bar-row">
+          <div>${status}</div>
+          <div class="bar-track"><div class="bar-fill rag-${status.toLowerCase()}" style="width:${(ragCounts[status] / ragMax) * 100}%"></div></div>
+          <div>${ragCounts[status]}</div>
+        </div>
       `).join("");
-      document.getElementById("issuesList").innerHTML = s.issues.split(". ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
-      document.getElementById("followList").innerHTML = s.follow.split("; ").filter(Boolean).map(x => `<li>${x}</li>`).join("");
-    }
 
-    function renderReadiness() {
       document.getElementById("readinessTable").innerHTML = filteredServices().map(s => `
         <tr>
           <td>${s.name}</td>
@@ -696,20 +1255,148 @@
           <td>${f.priority}</td>
         </tr>
       `).join("");
+      document.getElementById("serviceCards").innerHTML = filteredServices().map(s => `
+        <div class="service-card ${s.id === selectedService ? "selected" : ""}" data-service="${s.id}">
+          <h4>${s.name}</h4>
+          <span class="pill ${readinessClass(s.readiness)}">${s.readiness.replace("Unknown / Scope confirmation required","Unknown scope")}</span>
+          <p>${s.role}</p>
+        </div>
+      `).join("");
+      document.querySelectorAll("#serviceCards .service-card").forEach(card => {
+        card.addEventListener("click", () => {
+          selectedService = card.dataset.service;
+          serviceFilter.value = selectedService;
+          openPage("detail");
+          renderAll();
+        });
+      });
     }
 
     function renderInput() {
-      document.getElementById("inputTable").innerHTML = monthlyRows.map(row => `
-        <tr>
-          <td>${row[0]}</td>
-          <td>${row[1]}</td>
-          <td>${row[2]}</td>
-          <td><input aria-label="Actual value" placeholder="Input" value="${row[3]}"></td>
-          <td>${row[4]}</td>
-          <td><span class="pill rag-grey">${row[5]}</span></td>
-          <td>${row[6]}</td>
-        </tr>
-      `).join("");
+      const svc = inputService.value || "SVC002";
+      const workspace = document.getElementById("inputWorkspace");
+      const s = services.find(x => x.id === svc);
+      const ribbon = (title, sub, status = "Due 5 November · 4 days left") => `
+        <div class="input-ribbon">
+          <div><strong>${title}</strong><div class="small">${sub}</div></div>
+          <span class="pill medium-low">${status}</span>
+        </div>`;
+      const statusBar = (entered = "2 of 7 KPMs entered") => `
+        <div class="status-bar">
+          <div>
+            <strong>Data pulled from</strong><br>
+            <span class="pill rag-green">✓ PMS · 31 Oct</span>
+            <span class="pill rag-green">✓ Finance · 31 Oct</span>
+            <span class="pill rag-amber">⏱ Excel tracker · pending</span>
+          </div>
+          <div><strong>Status:</strong> ${entered}</div>
+        </div>`;
+      const trendCard = (title, sub, values, opts) => `
+        <div class="kpm-card">
+          <div class="kpm-head">
+            <div><h4>${title}</h4><div class="small">${sub}</div></div>
+            <button class="btn">↓ Download PNG</button>
+          </div>
+          ${sparklineSvg(values, opts)}
+        </div>`;
+      const bottomActions = `<div class="action-bar"><div class="small">Last saved 2 min ago</div><div class="button-row"><button class="btn">Save draft</button><button class="btn primary">Submit for Ann's review</button></div></div>`;
+
+      if (svc === "SVC002") {
+        workspace.innerHTML = `
+          ${ribbon("ARL Property · monthly KPI submission " + illustrativeTag("[Illustrative period]"), "Reporting period: October 2025 " + illustrativeTag())}
+          ${statusBar("2 of 7 KPMs entered")}
+          <div class="kpm-card">
+            <div class="kpm-head">
+              <div><h4>KPM 1 · Rent arrears</h4><div class="small">CHRA measure 1.1-1.6 · social housing</div></div>
+              <span class="pill rag-red">Auto-RAG: Red ${illustrativeTag()}</span>
+            </div>
+            <table>
+              <thead><tr><th>Measure</th><th>Target</th><th>Last month</th><th>This month</th></tr></thead>
+              <tbody>
+                <tr><td>Total rent outstanding at month-end</td><td>${illustrativeTag("[Illustrative threshold]")}</td><td>$87,420 (4.6%) ${illustrativeTag()}</td><td><input value="$91,261 (4.9%)"></td></tr>
+                <tr><td>Households &gt;21 days overdue</td><td>${illustrativeTag("[Illustrative threshold]")}</td><td>68 ${illustrativeTag()}</td><td><input value="75"></td></tr>
+              </tbody>
+            </table>
+            <p class="footer-caveat">Targets for KPM 1 sub-measures not explicitly stated in CHRA template. Thresholds shown are illustrative only and require confirmation from ARL reporting owner.</p>
+            <label class="slicer-label">Commentary (will appear in CHRA submission)</label>
+            <textarea>Backlog from storm damage continues...</textarea>
+          </div>
+          <div class="kpm-card">
+            <div class="kpm-head">
+              <div><h4>KPM 2 · Tenancy exits</h4><div class="small">CHRA measure 2.1-2.8 · annual reporting period</div></div>
+              <span class="pill rag-amber">Auto-RAG: Amber (definition pending)</span>
+            </div>
+            <table>
+              <thead><tr><th>Measure</th><th>Real value (CHRA)</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Total tenancy exits</td><td><strong>107</strong> ${sourceLabel("Source: ARL CHRA 2025/26")}</td><td>Source: ARL CHRA 2025/26</td></tr>
+                <tr><td>Tenancy terminations</td><td><strong>37</strong> ${sourceLabel("Source: ARL CHRA 2025/26")}</td><td>Of which 25 RTA breaches</td></tr>
+                <tr><td>KPM4 exits (occupancy calc)</td><td><strong>94</strong> ${sourceLabel("Source: ARL CHRA 2025/26")}</td><td>Different KPM definition</td></tr>
+              </tbody>
+            </table>
+            <div class="note" style="margin-top:10px;">Three tenancy-exit-related figures from CHRA workbook require definition clarification before dashboard mapping is finalised.</div>
+          </div>
+          <div class="kpm-card">
+            <div class="kpm-head">
+              <div><h4>KPM 6 · Repair timeframes</h4><div class="small">CHRA measure 6.1-6.4 · within SLA</div></div>
+              <span class="pill rag-red">Auto-RAG: Red</span>
+            </div>
+            <table>
+              <thead><tr><th>Measure</th><th>Real value (CHRA)</th><th>Target</th></tr></thead>
+              <tbody>
+                <tr><td>Non-urgent repairs within 14 days</td><td><strong>169 / 241 = 70%</strong> ${sourceLabel("Source: Lifewise CHRA 2025/26 Annual Monitoring Template")}</td><td>${illustrativeTag("[Illustrative threshold]")} ≥90%</td></tr>
+                <tr><td>Urgent repairs</td><td>0 (not separately maintained) ${sourceLabel("Source: Lifewise CHRA 2025/26 Annual Monitoring Template")}</td><td>24h SLA</td></tr>
+              </tbody>
+            </table>
+            <label class="slicer-label">Commentary</label>
+            <textarea>All repairs currently classified as non-urgent per CHRA workbook. Urgent / non-urgent split requires data system update.</textarea>
+          </div>
+          <div class="kpm-card">▸ KPM 3 · Turnaround · KPM 4 · Occupancy · KPM 5 · Complaints · KPM 7 · Satisfaction <span class="small">(4 sections collapsed)</span></div>
+          ${trendCard("Rent arrears % — last 12 months " + illustrativeTag(), "Use this chart in your CHRA narrative · screenshot or download", [3.1,3.2,3.4,3.5,3.8,3.9,4.1,4.2,4.3,4.5,4.6,4.9], {min:0,max:6,threshold:3,thresholdLabel:"[Illustrative threshold — not confirmed]",thresholdColor:"#8a94a6"})}
+          ${bottomActions}`;
+      } else if (svc === "SVC008") {
+        workspace.innerHTML = `
+          ${ribbon("ECE · monthly KPI submission " + illustrativeTag("[Illustrative period]"), "Reporting period: October 2025 " + illustrativeTag(), "Due 5 November · 4 days left")}
+          ${statusBar("5 KPI values entered")}
+          <div class="kpm-card">
+            <div class="kpm-head"><div><h4>ECE quality KPI entry</h4><div class="small">Illustrative actuals against real targets from ECE Quality Plan 2026</div></div><span class="pill rag-green">Auto-RAG: mostly Green ${illustrativeTag()}</span></div>
+            <table>
+              <thead><tr><th>KPI</th><th>Target</th><th>This month</th><th>RAG</th></tr></thead>
+              <tbody>
+                <tr><td>Occupancy</td><td>~90%</td><td><input value="91% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+                <tr><td>Training compliance</td><td>≥95%</td><td><input value="96% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+                <tr><td>Incident timeliness 24h</td><td>100%</td><td><input value="92% [Illustrative]"></td><td>${ragPill("Amber")}</td></tr>
+                <tr><td>Audit completion</td><td>100%</td><td><input value="100% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+                <tr><td>Priority whānau engagement</td><td>80-100%</td><td><input value="85% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          ${trendCard("Occupancy — last 12 months " + illustrativeTag(), "Use this chart in ECE monthly review narrative", [89,90,91,92,91,90,89,88,90,91,92,91], {min:86,max:94,threshold:90,thresholdLabel:"Target 90%",thresholdColor:"#b42318",lineColor:"#2e7d32"})}
+          ${bottomActions}`;
+      } else if (svc === "SVC006") {
+        workspace.innerHTML = `
+          ${ribbon("Merge Café · monthly KPI submission " + illustrativeTag("[Illustrative period]"), "Reporting period: October 2025 " + illustrativeTag(), "Due 5 November · 4 days left")}
+          ${statusBar("3 of 3 KPIs entered")}
+          <div class="kpm-card">
+            <div class="kpm-head"><div><h4>Contract KPI entry</h4><div class="small">Real targets from Service Manager response; actuals illustrative only</div></div><span class="pill rag-red">1 Red ${illustrativeTag()}</span></div>
+            <table>
+              <thead><tr><th>KPI</th><th>Target</th><th>This month</th><th>RAG</th></tr></thead>
+              <tbody>
+                <tr><td>Immediate needs met</td><td>85%</td><td><input value="87% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+                <tr><td>Continued engagement</td><td>85%</td><td><input value="86% [Illustrative]"></td><td>${ragPill("Green")}</td></tr>
+                <tr><td>Connected to community services</td><td>50%</td><td><input value="38% [Illustrative]"></td><td>${ragPill("Red")}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          ${trendCard("Community connections — last 12 months " + illustrativeTag(), "Illustrative trend against real target 50%", [51,49,50,48,47,46,44,42,41,40,39,38], {min:35,max:55,threshold:50,thresholdLabel:"Target 50%",thresholdColor:"#b42318",lineColor:"#b42318"})}
+          ${bottomActions}`;
+      } else if (svc === "SVC007") {
+        workspace.innerHTML = `<div class="panel"><h3>Whānau Services — Data capture currently being remediated.</h3><p>This service has substantial data capture gaps (per Service Manager response, May 2026). Monthly KPI input form will be designed once:</p><ul class="split-list"><li>Confirmed current contract KPIs are separated from future desired data fields</li><li>Source system / Recordbase field mapping is confirmed</li><li>Reporting frequency is confirmed</li></ul><p class="footer-caveat">Historical Mana Whānau outcomes (2018-2020) available in Service Detail page.</p></div>`;
+      } else if (["SVC003", "SVC004", "SVC005"].includes(svc)) {
+        workspace.innerHTML = `<div class="panel"><h3>${s.name}</h3><p>This service is in Discovery. Input form will be designed once KPI structure, targets, and source fields are confirmed with Service Manager.</p></div>`;
+      } else {
+        workspace.innerHTML = `<div class="panel"><h3>${s.name}</h3><p>Scope confirmation required. Please confirm with Ann-Marie whether this service is in dashboard scope.</p></div>`;
+      }
     }
 
     function openPage(pageId) {
@@ -718,7 +1405,7 @@
     }
 
     function renderAll() {
-      renderOverview();
+      renderPerformance();
       renderDetail();
       renderReadiness();
       renderInput();
@@ -727,6 +1414,7 @@
     pageButtons.forEach(btn => btn.addEventListener("click", () => openPage(btn.dataset.page)));
     serviceFilter.addEventListener("change", e => { selectedService = e.target.value; renderAll(); });
     readinessFilter.addEventListener("change", renderAll);
+    inputService.addEventListener("change", renderInput);
 
     renderFilters();
     renderAll();
